@@ -1,0 +1,47 @@
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# 1. Load the Iris Dataset
+iris = load_iris()
+X = iris.data  # Features: Sepal length, Sepal width, Petal length, Petal width
+y = iris.target  # Labels: 0 (setosa), 1 (versicolor), 2 (virginica)
+
+# Convert to DataFrame just to see the structure clearly
+df = pd.DataFrame(X, columns=iris.feature_names)
+df['species'] = y
+print("--- Dataset Sample ---")
+print(df.head(), "\n")
+
+# 2. Split the Data (80% Training, 20% Testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# 3. Feature Scaling (Good practice for machine learning stability)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# 4. Initialize and Train the Machine Learning Model
+# We're using a Random Forest Classifier, which is excellent for this dataset
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
+ 4. Predict
+y_pred = model.predict(X_test)
+
+# --- DIAGRAM 2: Confusion Matrix Heatmap ---
+# Calculates the breakdown of correct vs incorrect predictions
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+            xticklabels=iris.target_names, 
+            yticklabels=iris.target_names)
+plt.title('Iris Classification - Confusion Matrix')
+plt.xlabel('Predicted Species')
+plt.ylabel('True Species')
+plt.tight_layout()
+plt.show()
