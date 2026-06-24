@@ -5,6 +5,9 @@ Setosa
 Versicolor
 Virginica
 based on flower measurements like sepal and petal dimensions.
+
+
+
 🚀 Tech Stack
 Python
 Scikit-learn
@@ -14,9 +17,14 @@ NumPy
 Total Samples: 150
 Features: 4
 Classes: 3
+
+
+
 ⚙️ Model
 K-Nearest Neighbors (KNN)
 Simple and effective classification algorithm
+
+
 📈 Results
 ✅ Accuracy: 100%
 📊 High precision for all classes
